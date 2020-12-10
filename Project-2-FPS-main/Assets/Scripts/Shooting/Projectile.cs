@@ -6,6 +6,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed;
+    public float lookRadius = 10f;
 
     private Transform player;
     private Vector3 target;
@@ -19,7 +20,9 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        float distance = Vector3.Distance(player.position, transform.position);
+        if (distance <= lookRadius)
+            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
         if(transform.position.x == target.x && transform.position.y == target.y && transform.position.z == target.z )
         {
@@ -33,6 +36,11 @@ public class Projectile : MonoBehaviour
         {
             DestroyProjectile();             
         }
+        else if (!other.CompareTag("Enemy"))
+        {
+            DestroyProjectile();
+        }
+
     }
 
     private void DestroyProjectile()

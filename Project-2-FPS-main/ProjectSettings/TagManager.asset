@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Armor
+  - Enemy
   layers:
   - Default
   - TransparentFX
