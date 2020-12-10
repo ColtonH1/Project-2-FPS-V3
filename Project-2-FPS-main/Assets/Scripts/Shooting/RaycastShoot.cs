@@ -45,7 +45,7 @@ public class RaycastShoot : MonoBehaviour
             {
                 laserLine.SetPosition(1, hit.point);
 
-                ShootableBox health = hit.collider.GetComponent<ShootableBox>();
+                EnemyController health = hit.collider.GetComponent<EnemyController>();
 
                 if(health != null)
                 {
@@ -63,6 +63,7 @@ public class RaycastShoot : MonoBehaviour
         }
     }
 
+    //delay shoot audio
     private IEnumerator ShotEffect()
     {
         shootAudio.Play();
@@ -72,10 +73,4 @@ public class RaycastShoot : MonoBehaviour
         //impactAudio.Play();
         laserLine.enabled = false;
     }
-
-    /*private IEnumerator ShotSound()
-    {
-        yield return new WaitForSeconds(2f);
-        impactAudio.Play();
-    }*/
 }

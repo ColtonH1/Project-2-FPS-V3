@@ -10,11 +10,22 @@ public class EnemyController : MonoBehaviour
     Transform target;
     NavMeshAgent agent;
 
+    public int currentHealth = 3;
+    private AudioSource impactAudio;
+
+    //shooting
+    private float timeBtwnShots;
+    public float startTimeBtwnShots;
+
+    public GameObject projectile;
+
     // Start is called before the first frame update
     void Start()
     {
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
+        impactAudio = GetComponent<AudioSource>();
+        timeBtwnShots = startTimeBtwnShots;
     }
 
     // Update is called once per frame
@@ -31,6 +42,16 @@ public class EnemyController : MonoBehaviour
                 FaceTarget();
             }
         }
+
+        if(timeBtwnShots <= 0)
+        {
+            Instantiate(projectile, transform.position, Quaternion.identity);
+            timeBtwnShots = startTimeBtwnShots;
+        }
+        else
+        {
+            timeBtwnShots -= Time.deltaTime;
+        }
     }
 
     void FaceTarget()
@@ -44,5 +65,15 @@ public class EnemyController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, lookRadius);
+    }
+
+    public void Damage(int damageAmount)
+    {
+        currentHealth -= damageAmount;
+        impactAudio.Play();
+        if (currentHealth <= 0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
