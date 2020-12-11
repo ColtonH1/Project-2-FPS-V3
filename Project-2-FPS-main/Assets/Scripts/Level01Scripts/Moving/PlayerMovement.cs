@@ -44,6 +44,21 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, groundDistance + .1f))
+        {
+            isGrounded = true;
+            Debug.Log("Grounded");
+        }
+        else
+        {
+            isGrounded = false;
+            Debug.Log("Not Grounded");
+        }
+
+    }
+
     private void Moving(float currentSpeed)
     {
         //moving on x and z
@@ -73,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jumping()
     {
         //check if grounded to reset velocity when falling (or lack thereof)
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;

@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class RaycastShoot : MonoBehaviour
 {
 
     public int gunDamage = 1;
     public float fireRate = .25f;
-    public float weaponRange = 50f;
+    public float weaponRange = 100f;
     public float hitForce = 100f;
     public Transform gunEnd;
+    //public static int score = 0;
+    public static bool shot = false;
 
 
     private Camera fpsCam;
@@ -32,6 +35,7 @@ public class RaycastShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        shot = false;
         if(Input.GetMouseButtonDown(0) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
@@ -52,11 +56,13 @@ public class RaycastShoot : MonoBehaviour
                 if(health != null)
                 {
                     health.Damage(gunDamage);
+                    shot = true;
                 }
                 if(hit.rigidbody != null)
                 {
                     hit.rigidbody.AddForce(-hit.normal * hitForce);
-                }    
+                }
+                
             }
             else
             {
@@ -75,4 +81,14 @@ public class RaycastShoot : MonoBehaviour
         fireAudio.PlayOneShot(impactClip);
         laserLine.enabled = false;
     }
+
+    public static bool GetIfShot()
+    {
+        return shot;
+    }
+
+    /*public static int GetScore()
+    {
+        return score;
+    }*/
 }

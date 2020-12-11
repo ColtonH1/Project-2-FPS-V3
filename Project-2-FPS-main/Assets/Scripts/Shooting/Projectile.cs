@@ -11,14 +11,9 @@ public class Projectile : MonoBehaviour
     private Transform player;
     private Vector3 target;
 
-    private AudioSource fireShot;
-    public AudioClip bulletSound;
-
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        fireShot = GetComponent<AudioSource>();
-        //bulletSound = GetComponent<AudioClip>();
         target = new Vector3(player.position.x, player.position.y, player.position.z);
     }
 
@@ -28,7 +23,6 @@ public class Projectile : MonoBehaviour
         if (distance <= lookRadius)
         {
             transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-            fireShot.PlayOneShot(bulletSound);
         }
 
         if(transform.position.x == target.x && transform.position.y == target.y && transform.position.z == target.z )
@@ -58,5 +52,4 @@ public class Projectile : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
 }

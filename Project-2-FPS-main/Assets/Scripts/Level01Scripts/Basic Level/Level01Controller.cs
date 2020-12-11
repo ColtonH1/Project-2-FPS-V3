@@ -20,6 +20,8 @@ public class Level01Controller : MonoBehaviour
 
     int _currentScore;
 
+    //RaycastShoot raycastShoot;
+
     void Start()
     {
         Resume(); //calls the function so game isn't pause from the beginning
@@ -32,6 +34,18 @@ public class Level01Controller : MonoBehaviour
         {
             IncreaseScore(5);
         }
+
+        if(RaycastShoot.GetIfShot())
+        {
+            IncreaseScore(EnemyController.GetScore());
+        }
+
+        if(Player.IsPlayerDead())
+        {
+            _currentScore = 0;
+            Debug.Log("Is player dead, l01cont " + _currentScore);
+        }
+
 
         /*
          * make script to keep score
@@ -46,7 +60,9 @@ public class Level01Controller : MonoBehaviour
 
     public void IncreaseScore(int scoreIncrease)
     {
-        _currentScore += scoreIncrease;
+        Debug.Log("Before inc, l01cont " + _currentScore);
+        _currentScore = scoreIncrease;
+        Debug.Log("After inc, l01cont " + _currentScore);
 
         _currentScoreTextView.text = "Score: " + _currentScore.ToString();
     }

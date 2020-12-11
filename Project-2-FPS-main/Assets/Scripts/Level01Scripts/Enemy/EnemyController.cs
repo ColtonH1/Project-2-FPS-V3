@@ -11,7 +11,10 @@ public class EnemyController : MonoBehaviour
     NavMeshAgent agent;
 
     public int currentHealth = 3;
-    private AudioSource impactAudio;
+    private AudioSource shootAudio;
+    public AudioClip impactClip;
+    public AudioClip fireClip;
+    public static int score = 0;
 
     //shooting
     private float timeBtwnShots;
@@ -24,7 +27,7 @@ public class EnemyController : MonoBehaviour
     {
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
-        impactAudio = GetComponent<AudioSource>();
+        shootAudio = GetComponent<AudioSource>();
         timeBtwnShots = startTimeBtwnShots;
     }
 
@@ -33,19 +36,27 @@ public class EnemyController : MonoBehaviour
     {
         float distance = Vector3.Distance(target.position, transform.position);
 
-        if(distance <= lookRadius)
+        if (distance <= lookRadius)
         {
+            Shoot();
             agent.SetDestination(target.position);
+            Shoot();
 
-            if(distance <= agent.stoppingDistance)
+            if (distance <= agent.stoppingDistance)
             {
                 FaceTarget();
             }
-        }
 
-        if(timeBtwnShots <= 0)
+
+        }
+    }
+
+    private void Shoot()
+    {
+        if (timeBtwnShots <= 0)
         {
             Instantiate(projectile, transform.position, Quaternion.identity);
+            shootAudio.PlayOneShot(fireClip);
             timeBtwnShots = startTimeBtwnShots;
         }
         else
@@ -69,11 +80,23 @@ public class EnemyController : MonoBehaviour
 
     public void Damage(int damageAmount)
     {
+        score += 5;
         currentHealth -= damageAmount;
-        impactAudio.Play();
+        shootAudio.PlayOneShot(impactClip);
         if (currentHealth <= 0)
         {
             gameObject.SetActive(false);
         }
+    }
+
+    public static int GetScore()
+    {
+        if (Player.IsPlayerDead())
+        {
+            score = 0;
+            Debug.Log("If statement. enCont, " + score);
+        }
+        Debug.Log("returning. enCont, " + score);
+        return score;
     }
 }

@@ -9,7 +9,9 @@ public class Player : MonoBehaviour
     [SerializeField] Text _currentHealthTextView;
     [SerializeField] public int armor;
     public Camera cam;
-    private AudioSource Hit;
+    private AudioSource Impact;
+    public AudioClip HurtSound;
+    public AudioClip DeathSound;
 
     public Interactable focus;
     //PlayerMovement playerMovement;
@@ -34,13 +36,14 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         _currentHealthTextView.text = "Health: " + currentHealth.ToString();
-        Hit = GetComponent<AudioSource>();
+        Impact = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Z))
+        playerIsDead = false;
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             TakeDamage(20);
         }
@@ -100,6 +103,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
+        Impact.PlayOneShot(DeathSound);
         deathMenuUI.SetActive(true);
         reticle.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
@@ -141,9 +145,13 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Hit.Play();
+            Impact.PlayOneShot(HurtSound);
             TakeDamage(5);
         }
+    }
 
+    public static bool IsPlayerDead()
+    {
+        return playerIsDead;
     }
 }
