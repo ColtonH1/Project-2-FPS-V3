@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ArmorSound : MonoBehaviour
 {
-
+    /*
     private AudioSource ArmorCollect;
+    public ParticleSystem pickupEffect;
 
 
     void Start()
@@ -13,15 +14,12 @@ public class ArmorSound : MonoBehaviour
         ArmorCollect = GetComponent<AudioSource>();
     }
 
-   /* private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        ArmorCollect.Play();
-    }*/
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        if(collider.tag == "Player")
+        if(other.tag == "Player")
         {
+            //Instantiate(pickupEffect, transform.position, transform.rotation);
+            pickupEffect.Play();
             ArmorCollect.Play();
             StartCoroutine("Destroy");
         }
@@ -31,8 +29,33 @@ public class ArmorSound : MonoBehaviour
 
     IEnumerator Destroy()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
         gameObject.SetActive(false);
         
+    }*/
+
+    public GameObject pickupEffect;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            Pickup();
+        }
+    }
+
+    void Pickup()
+    {
+        Instantiate(pickupEffect, transform.position, transform.rotation);
+
+        Destroy(gameObject);
+        Destroy();
+    }
+
+    IEnumerator Destroy()
+    {
+        yield return new WaitForSeconds(1f);
+        pickupEffect.SetActive(false);
+
     }
 }

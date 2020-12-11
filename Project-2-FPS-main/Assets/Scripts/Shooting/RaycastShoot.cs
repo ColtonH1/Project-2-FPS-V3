@@ -14,16 +14,18 @@ public class RaycastShoot : MonoBehaviour
 
     private Camera fpsCam;
     private WaitForSeconds shotDuration = new WaitForSeconds(.07f);
-    private AudioSource shootAudio;
-    private AudioSource impactAudio;
+    private AudioSource fireAudio;
+    public AudioClip impactClip;
+    public AudioClip shootClip;
     private LineRenderer laserLine;
     private float nextFire;
 
     void Start()
     {
         laserLine = GetComponent<LineRenderer>();
-        shootAudio = GetComponent<AudioSource>();
-        impactAudio = GetComponent<AudioSource>();
+        fireAudio = GetComponent<AudioSource>();
+        //impactClip = GetComponent<AudioClip>();
+        //shootClip = GetComponent<AudioClip>();
         fpsCam = GetComponentInParent<Camera>();
     }
 
@@ -66,11 +68,11 @@ public class RaycastShoot : MonoBehaviour
     //delay shoot audio
     private IEnumerator ShotEffect()
     {
-        shootAudio.Play();
+        fireAudio.PlayOneShot(shootClip);
 
         laserLine.enabled = true;
         yield return shotDuration;
-        //impactAudio.Play();
+        fireAudio.PlayOneShot(impactClip);
         laserLine.enabled = false;
     }
 }

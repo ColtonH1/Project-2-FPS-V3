@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     public static bool playerIsDead = false;
     public GameObject deathMenuUI;
     public GameObject reticle;
+    
 
     
 
