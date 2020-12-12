@@ -20,7 +20,8 @@ public class EnemyController : MonoBehaviour
     private float timeBtwnShots;
     public float startTimeBtwnShots;
 
-    public GameObject projectile;
+    public GameObject projectile1;
+    public GameObject projectile2;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +56,8 @@ public class EnemyController : MonoBehaviour
     {
         if (timeBtwnShots <= 0)
         {
-            Instantiate(projectile, transform.position, Quaternion.identity);
+            Instantiate(projectile1, transform.position, Quaternion.identity);
+            Instantiate(projectile2, transform.position, Quaternion.identity);
             shootAudio.PlayOneShot(fireClip);
             timeBtwnShots = startTimeBtwnShots;
         }

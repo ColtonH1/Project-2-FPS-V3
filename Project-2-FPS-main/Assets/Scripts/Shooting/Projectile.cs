@@ -10,6 +10,7 @@ public class Projectile : MonoBehaviour
 
     private Transform player;
     private Vector3 target;
+    public static GameObject gunEnd;
 
     private void Start()
     {
