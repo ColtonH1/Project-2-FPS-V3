@@ -24,27 +24,23 @@ public class Level01Controller : MonoBehaviour
 
     void Start()
     {
+        SetHighScore();
+        EnemyController.ResetScore();
         Resume(); //calls the function so game isn't pause from the beginning
     }
     // Update is called once per frame
     void Update()
     {
-        //for debugging
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            IncreaseScore(5);
-        }
-
         if(RaycastShoot.GetIfShot())
         {
             IncreaseScore(EnemyController.GetScore());
         }
 
-        if(Player.IsPlayerDead())
+        /*if(Player.IsPlayerDead())
         {
             _currentScore = 0;
             Debug.Log("Is player dead, l01cont " + _currentScore);
-        }
+        }*/
 
 
         /*
@@ -85,13 +81,18 @@ public class Level01Controller : MonoBehaviour
 
     public void ExitLevel()
     {
+        SetHighScore();
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void SetHighScore()
+    {
         int highScore = PlayerPrefs.GetInt("HighScore");
-        if(_currentScore > highScore)
+        if (_currentScore > highScore)
         {
             PlayerPrefs.SetInt("HighScore", _currentScore);
             Debug.Log("New high score " + _currentScore);
         }
-        SceneManager.LoadScene("MainMenu");
     }
 
     public void Resume()

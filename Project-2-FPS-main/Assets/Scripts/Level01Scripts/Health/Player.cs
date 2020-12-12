@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerIsDead = false;
         if (Input.GetKeyDown(KeyCode.Z))
         {
             TakeDamage(20);
@@ -152,6 +151,7 @@ public class Player : MonoBehaviour
 
     public static bool IsPlayerDead()
     {
+        Debug.Log("PlayerScript. IsPlayerDead" + playerIsDead);
         return playerIsDead;
     }
 }

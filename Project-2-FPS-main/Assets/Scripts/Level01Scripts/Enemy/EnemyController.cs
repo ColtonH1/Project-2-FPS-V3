@@ -89,14 +89,20 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public static bool isPlayerDead;
+    public static bool GetPlayerIsDead()
+    {
+        Debug.Log("Static Bool, player is " + Player.IsPlayerDead());
+        return Player.IsPlayerDead();
+    }
+
+    public static void ResetScore()
+    {
+        score = 0;
+    }
     public static int GetScore()
     {
-        if (Player.IsPlayerDead())
-        {
-            score = 0;
-            Debug.Log("If statement. enCont, " + score);
-        }
-        Debug.Log("returning. enCont, " + score);
         return score;
+        
     }
 }

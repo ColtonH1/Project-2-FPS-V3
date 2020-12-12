@@ -22,6 +22,8 @@ public class MainMenuController : MonoBehaviour
     public void ResetData()
     {
         PlayerPrefs.SetInt("HighScore", 0);
+        int highScore = PlayerPrefs.GetInt("HighScore");
+        _highScoreTextView.text = highScore.ToString();
         Debug.Log("Data Reset");
     }
 
