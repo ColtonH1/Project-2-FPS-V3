@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.AI;
+using Debug = UnityEngine.Debug;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,12 +13,18 @@ public class PlayerMovement : MonoBehaviour
     //NavMeshAgent agent;
 
     public float speed = 12f; //speed
+    public float startingSpeed;
     public float gravity = -9.81f; //gravity
     public float jumpHeight = 3f; //jumping
+    public float crouchSpeed = 6f; //crouching speed
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+
+    private CharacterController characterController;
+    public float height;
+
 
     Vector3 velocity; //gravity
     bool isGrounded;
@@ -24,7 +32,9 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        characterController = gameObject.GetComponent<CharacterController>();
+        height = characterController.height;
+        startingSpeed = speed;
     }
 
     // Update is called once per frame
@@ -37,10 +47,16 @@ public class PlayerMovement : MonoBehaviour
 
         Moving(currentSpeed);
 
-        /*if(target != null)
+        if (Input.GetKey(KeyCode.C))
         {
-            agent.SetDestination(target.position);
-        }*/
+            characterController.height = height * 0.75f;
+            speed = startingSpeed * .5f;
+        }
+        if(!Input.GetKey(KeyCode.C))
+        {
+            characterController.height = height;
+            speed = startingSpeed;
+        }
 
     }
 

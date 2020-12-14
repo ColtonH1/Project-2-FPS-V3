@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
     public float startTimeBtwnShots;
 
     public GameObject projectile1;
-    public GameObject projectile2;
+    //public GameObject projectile2;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +40,7 @@ public class EnemyController : MonoBehaviour
         if (distance <= lookRadius)
         {
             Shoot();
+            //HoldNavAgent();
             agent.SetDestination(target.position);
             Shoot();
 
@@ -57,7 +58,7 @@ public class EnemyController : MonoBehaviour
         if (timeBtwnShots <= 0)
         {
             Instantiate(projectile1, transform.position, Quaternion.identity);
-            Instantiate(projectile2, transform.position, Quaternion.identity);
+            //Instantiate(projectile2, transform.position, Quaternion.identity);
             shootAudio.PlayOneShot(fireClip);
             timeBtwnShots = startTimeBtwnShots;
         }
@@ -105,6 +106,16 @@ public class EnemyController : MonoBehaviour
     public static int GetScore()
     {
         return score;
-        
+
     }
+
+    /*public IEnumerator HoldNavAgent()
+    {
+        yield return new WaitForSeconds(0.1f);
+        agent = GetComponent<NavMeshAgent>();
+        agent.enabled = true;
+        //target = PlayerManager.instance.player.transform;
+        //agent.speed = 2;
+        agent.SetDestination(target.transform.position);
+    }*/
 }

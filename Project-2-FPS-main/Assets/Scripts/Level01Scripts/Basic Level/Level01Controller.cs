@@ -126,4 +126,12 @@ public class Level01Controller : MonoBehaviour
         return GameIsPaused;
     }
 
+    public void Died()
+    {
+        reticle.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 0f;
+    }
+
 }

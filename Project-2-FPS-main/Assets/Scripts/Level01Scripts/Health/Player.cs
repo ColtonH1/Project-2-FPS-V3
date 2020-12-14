@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Z))
         {
             TakeDamage(20);
@@ -49,7 +50,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             TakeDamage(-20);
-        }
+        }*/
         if(currentHealth == 0)
         {
             Die();
@@ -109,6 +110,7 @@ public class Player : MonoBehaviour
         Cursor.visible = true;
         Time.timeScale = 0f;
         playerIsDead = true;
+
     }
 
     void TakeDamage(int damage)
@@ -142,11 +144,24 @@ public class Player : MonoBehaviour
         {
             armor += 2;
         }
+        else if (collider.tag == "Health")
+        {
+            TakeDamage(-10);
+        }
         else
         {
             Impact.PlayOneShot(HurtSound);
             TakeDamage(5);
         }
+    }
+
+    private void Heal()
+    {
+        currentHealth += 10;
+
+        //update healthbar/health point
+        healthBar.SetHealth(currentHealth);
+        _currentHealthTextView.text = "Health: " + currentHealth.ToString();
     }
 
     public static bool IsPlayerDead()
