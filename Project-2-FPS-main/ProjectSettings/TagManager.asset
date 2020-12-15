@@ -7,6 +7,7 @@ TagManager:
   - Armor
   - Enemy
   - Health
+  - Treasure
   layers:
   - Default
   - TransparentFX

@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmorSound : MonoBehaviour
+public class TreasureChest : MonoBehaviour
 {
     
-    private AudioSource ArmorCollect;
+    private AudioSource TreasureCollect;
+    private static bool Collect;
     //public ParticleSystem pickupEffect;
 
 
     void Start()
     {
-        ArmorCollect = GetComponent<AudioSource>();
+        TreasureCollect = GetComponent<AudioSource>();
+        Collect = false;
+    }
+
+    private void FixedUpdate()
+    {
+        Debug.Log("We collected: " + Collect);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,20 +27,23 @@ public class ArmorSound : MonoBehaviour
         {
             //Instantiate(pickupEffect, transform.position, transform.rotation);
             //pickupEffect.Play();
-            ArmorCollect.Play();
-            Player.AddArmor(3);
+            TreasureCollect.Play();
+            Collect = true;
             StartCoroutine("Destroy");
         }
         
         
     }
 
+    public static bool DidCollect()
+    {
+        return Collect;
+    }
+
     IEnumerator Destroy()
     {
-        GetComponent<MeshRenderer>().enabled = false;
-        GetComponent<Collider>().enabled = false;
-        yield return new WaitForSeconds(5f);
-        Player.RemoveArmor(3);
+        yield return new WaitForSeconds(.5f);
+        Collect = false;
         gameObject.SetActive(false);
         
     }

@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class Level01Controller : MonoBehaviour
@@ -17,6 +18,8 @@ public class Level01Controller : MonoBehaviour
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
     public GameObject reticle;
+    public GameObject[] treasureChest;
+
 
     int _currentScore;
 
@@ -24,6 +27,7 @@ public class Level01Controller : MonoBehaviour
 
     void Start()
     {
+        treasureChest = GameObject.FindGameObjectsWithTag("Treasure");
         SetHighScore();
         EnemyController.ResetScore();
         Resume(); //calls the function so game isn't pause from the beginning
@@ -56,9 +60,7 @@ public class Level01Controller : MonoBehaviour
 
     public void IncreaseScore(int scoreIncrease)
     {
-        Debug.Log("Before inc, l01cont " + _currentScore);
         _currentScore = scoreIncrease;
-        Debug.Log("After inc, l01cont " + _currentScore);
 
         _currentScoreTextView.text = "Score: " + _currentScore.ToString();
     }
@@ -132,6 +134,16 @@ public class Level01Controller : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Time.timeScale = 0f;
+    }
+
+    public void AddToScore(int scorePlus)
+    {
+        if(TreasureChest.DidCollect())
+        {
+            _currentScore += scorePlus; 
+            IncreaseScore(_currentScore);
+        }
+            
     }
 
 }

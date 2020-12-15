@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [SerializeField] Text _currentHealthTextView;
-    [SerializeField] public int armor;
     public Camera cam;
     private AudioSource Impact;
     public AudioClip HurtSound;
@@ -17,6 +16,8 @@ public class Player : MonoBehaviour
     //PlayerMovement playerMovement;
     public int maxHealth = 100;
     public int currentHealth;
+    public static int armor;
+    public static int totalArmor;
 
     public HealthBar healthBar;
 
@@ -26,6 +27,8 @@ public class Player : MonoBehaviour
     public static bool playerIsDead = false;
     public GameObject deathMenuUI;
     public GameObject reticle;
+
+    public Level01Controller level01Controller;
     
 
     
@@ -51,7 +54,9 @@ public class Player : MonoBehaviour
         {
             TakeDamage(-20);
         }*/
-        if(currentHealth == 0)
+
+        totalArmor = armor;
+        if (currentHealth == 0)
         {
             Die();
         }
@@ -75,6 +80,16 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
+
+    public static void AddArmor(int newArmor)
+    {
+        armor += newArmor;
+    }
+
+    public static void RemoveArmor(int oldArmor)
+    {
+        armor -= oldArmor;
     }
 
     private void SetFocus(Interactable newFocus )
@@ -136,17 +151,36 @@ public class Player : MonoBehaviour
         _currentHealthTextView.text = "Health: " + currentHealth.ToString();
     }
 
+    void Heal(int health)
+    {
+        health = Mathf.Clamp(health, 0, int.MaxValue);
+        currentHealth += health;
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
+        if (currentHealth > 100)
+        {
+            currentHealth = 100;
+        }
+        //update healthbar/health point
+        healthBar.SetHealth(currentHealth);
+        _currentHealthTextView.text = "Health: " + currentHealth.ToString();
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("HIT!");
-
         if(collider.tag == "Armor")
         {
-            armor += 2;
+            //armor += 2;
         }
         else if (collider.tag == "Health")
         {
-            TakeDamage(-10);
+            Heal(10);
+        }
+        else if(collider.tag == "Treasure")
+        {
+            level01Controller.AddToScore(10);
         }
         else
         {
@@ -155,18 +189,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Heal()
-    {
-        currentHealth += 10;
-
-        //update healthbar/health point
-        healthBar.SetHealth(currentHealth);
-        _currentHealthTextView.text = "Health: " + currentHealth.ToString();
-    }
-
     public static bool IsPlayerDead()
     {
-        Debug.Log("PlayerScript. IsPlayerDead" + playerIsDead);
         return playerIsDead;
     }
 }

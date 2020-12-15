@@ -39,6 +39,8 @@ public class EnemyController : MonoBehaviour
 
         if (distance <= lookRadius)
         {
+
+            GetComponent<Oscillator>().enabled = false;
             Shoot();
             //HoldNavAgent();
             agent.SetDestination(target.position);
@@ -48,7 +50,10 @@ public class EnemyController : MonoBehaviour
             {
                 FaceTarget();
             }
-
+        }
+        else
+        {
+            //GetComponent<Oscillator>().enabled = true;
 
         }
     }
@@ -95,7 +100,6 @@ public class EnemyController : MonoBehaviour
     public static bool isPlayerDead;
     public static bool GetPlayerIsDead()
     {
-        Debug.Log("Static Bool, player is " + Player.IsPlayerDead());
         return Player.IsPlayerDead();
     }
 
