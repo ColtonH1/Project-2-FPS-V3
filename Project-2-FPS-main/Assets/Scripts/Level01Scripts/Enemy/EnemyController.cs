@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour
     public AudioClip impactClip;
     public AudioClip fireClip;
     public static int score = 0;
+    public static bool gotShot = false;
 
     //shooting
     private float timeBtwnShots;
@@ -89,6 +90,7 @@ public class EnemyController : MonoBehaviour
     public void Damage(int damageAmount)
     {
         score += 5;
+        gotShot = true;
         currentHealth -= damageAmount;
         shootAudio.PlayOneShot(impactClip);
         if (currentHealth <= 0)
@@ -97,6 +99,12 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public static bool GotShot()
+    {
+        return gotShot;
+    }
+
+    /*
     public static bool isPlayerDead;
     public static bool GetPlayerIsDead()
     {
@@ -109,9 +117,11 @@ public class EnemyController : MonoBehaviour
     }
     public static int GetScore()
     {
-        return score;
+        int send = score;
+        score -= 5;
+        return send;
 
-    }
+    }*/
 
     /*public IEnumerator HoldNavAgent()
     {

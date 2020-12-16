@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmorSound : MonoBehaviour
+public class BonusPoints : MonoBehaviour
 {
     
-    private AudioSource ArmorCollect;
+    private AudioSource BonusCollect;
     //public ParticleSystem pickupEffect;
 
 
     void Start()
     {
-        ArmorCollect = GetComponent<AudioSource>();
+        BonusCollect = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,8 +20,7 @@ public class ArmorSound : MonoBehaviour
         {
             //Instantiate(pickupEffect, transform.position, transform.rotation);
             //pickupEffect.Play();
-            ArmorCollect.Play();
-            Player.AddArmor(3);
+            BonusCollect.Play();
             StartCoroutine("Destroy");
         }
         
@@ -32,8 +31,7 @@ public class ArmorSound : MonoBehaviour
     {
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
-        yield return new WaitForSeconds(10f);
-        Player.RemoveArmor(3);
+        yield return new WaitForSeconds(1f);
         gameObject.SetActive(false);
         
     }

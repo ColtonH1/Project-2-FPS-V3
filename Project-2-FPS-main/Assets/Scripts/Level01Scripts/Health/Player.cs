@@ -135,7 +135,6 @@ public class Player : MonoBehaviour
         damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
         //clamp health
-        Debug.Log("player take damage");
         currentHealth -= damage;
         if(currentHealth < 0)
         {
@@ -181,6 +180,15 @@ public class Player : MonoBehaviour
         else if(collider.tag == "Treasure")
         {
             level01Controller.AddToScore(10);
+        }
+        else if(collider.tag == "Bonus")
+        {
+            level01Controller.AddToScore(50);
+            Debug.Log("Hit Bonus");
+        }
+        else if(collider.tag == "SlowDownProjectilePowerUp")
+        {
+
         }
         else
         {

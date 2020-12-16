@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmorSound : MonoBehaviour
+public class SlowDown : MonoBehaviour
 {
     
-    private AudioSource ArmorCollect;
+    private AudioSource PowerUpSound;
+    public static bool speedIsAltered = false;
     //public ParticleSystem pickupEffect;
 
 
     void Start()
     {
-        ArmorCollect = GetComponent<AudioSource>();
+        PowerUpSound = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,8 +21,8 @@ public class ArmorSound : MonoBehaviour
         {
             //Instantiate(pickupEffect, transform.position, transform.rotation);
             //pickupEffect.Play();
-            ArmorCollect.Play();
-            Player.AddArmor(3);
+            PowerUpSound.Play();
+            Level01Controller.SetCurrentTime(0.5f);
             StartCoroutine("Destroy");
         }
         
@@ -33,9 +34,9 @@ public class ArmorSound : MonoBehaviour
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
         yield return new WaitForSeconds(10f);
-        Player.RemoveArmor(3);
+        Level01Controller.SetCurrentTime(1f);
         gameObject.SetActive(false);
-        
+
     }
     /*
     public GameObject pickupEffect;

@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Health
   - Treasure
+  - Bonus
+  - SlowDownProjectilePowerUp
   layers:
   - Default
   - TransparentFX
