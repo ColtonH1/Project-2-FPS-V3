@@ -9,7 +9,8 @@ TagManager:
   - Health
   - Treasure
   - Bonus
-  - SlowDownProjectilePowerUp
+  - SlowDownPowerUp
+  - SpeedUp
   layers:
   - Default
   - TransparentFX

@@ -104,33 +104,4 @@ public class EnemyController : MonoBehaviour
     {
         return gotShot;
     }
-
-    /*
-    public static bool isPlayerDead;
-    public static bool GetPlayerIsDead()
-    {
-        return Player.IsPlayerDead();
-    }
-
-    public static void ResetScore()
-    {
-        score = 0;
-    }
-    public static int GetScore()
-    {
-        int send = score;
-        score -= 5;
-        return send;
-
-    }*/
-
-    /*public IEnumerator HoldNavAgent()
-    {
-        yield return new WaitForSeconds(0.1f);
-        agent = GetComponent<NavMeshAgent>();
-        agent.enabled = true;
-        //target = PlayerManager.instance.player.transform;
-        //agent.speed = 2;
-        agent.SetDestination(target.transform.position);
-    }*/
 }

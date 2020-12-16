@@ -13,7 +13,6 @@ using UnityEngine.UI;
 public class Level01Controller : MonoBehaviour
 {
     [SerializeField] Text _currentScoreTextView;
-    //[SerializeField] Text _TimeSlowDownTextView;
 
     //pause menu
     public static bool GameIsPaused = false;
@@ -24,7 +23,7 @@ public class Level01Controller : MonoBehaviour
     public GameObject[] treasureChest;
     public int treasureCount;
     public static float currentTime;
-    public bool showed = false;
+    public static bool showed = false;
 
 
     int _currentScore;
@@ -48,18 +47,28 @@ public class Level01Controller : MonoBehaviour
             Time.timeScale = currentTime;
         }
 
-        if (RaycastShoot.GetIfShot())
+        if (RaycastShoot.GetIfShot() && WeaponSwitching.GetSelectedWeapon() == 0)
         {
             //int score = EnemyController.GetScore();
             if(EnemyController.GotShot())
             {
                 _currentScore += 5;
                 IncreaseScore(_currentScore);
-            }
-           
+            }  
         }
 
-        if(treasureCount == 5)
+        if (RaycastShoot.GetIfShot() && WeaponSwitching.GetSelectedWeapon() == 1)
+        {
+            //int score = EnemyController.GetScore();
+            if (EnemyController.GotShot())
+            {
+                _currentScore += 1;
+                IncreaseScore(_currentScore);
+            }
+        }
+
+        Debug.Log("Treasure count if win " + treasureCount);
+        if (treasureCount == 5)
         {
             Win();
         }
@@ -119,9 +128,14 @@ public class Level01Controller : MonoBehaviour
         }
     }
 
+    //time functions
     public static void SetCurrentTime(float time)
     {
         currentTime = time;
+        if(currentTime == 0f)
+        {
+            showed = true;
+        }
     }
     public float GetCurrentTime()
     {
@@ -136,6 +150,7 @@ public class Level01Controller : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SlowDownUI.SetActive(false);
     }
+
 
 
     public void Resume()
@@ -187,6 +202,7 @@ public class Level01Controller : MonoBehaviour
     {
         if(TreasureChest.DidCollect())
         {
+            Debug.Log("Treasure count " + treasureCount);
             treasureCount++;
             _currentScore += scorePlus; 
             IncreaseScore(_currentScore);
@@ -197,6 +213,11 @@ public class Level01Controller : MonoBehaviour
             IncreaseScore(_currentScore);
         }
             
+    }
+
+    public static void SetShowed(bool didShow)
+    {
+        showed = didShow;
     }
 
 }

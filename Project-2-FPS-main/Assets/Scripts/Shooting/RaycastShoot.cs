@@ -23,6 +23,8 @@ public class RaycastShoot : MonoBehaviour
     private LineRenderer laserLine;
     private float nextFire;
 
+    public static bool isPlayerDead;
+
 
     void Start()
     {
@@ -31,13 +33,15 @@ public class RaycastShoot : MonoBehaviour
         //impactClip = GetComponent<AudioClip>();
         //shootClip = GetComponent<AudioClip>();
         fpsCam = GetComponentInParent<Camera>();
+        isPlayerDead = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        isPlayerDead = Player.IsPlayerDead();
         shot = false;
-        if(Input.GetMouseButtonDown(0) && Time.time > nextFire)
+        if(Input.GetMouseButtonDown(0) && Time.time > nextFire && !Player.playerIsDead && !Level01Controller.GameIsPaused)
         {
             nextFire = Time.time + fireRate;
 

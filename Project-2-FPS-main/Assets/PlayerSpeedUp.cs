@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmorSound : MonoBehaviour
+public class PlayerSpeedUp : MonoBehaviour
 {
-    
-    private AudioSource ArmorCollect;
-    //public ParticleSystem pickupEffect;
+
+    private AudioSource PowerUpSound;
+    public static bool speedIsAltered = false;
+    public static float speed;
 
 
     void Start()
     {
-        ArmorCollect = GetComponent<AudioSource>();
+        PowerUpSound = GetComponent<AudioSource>();
+        speed = PlayerMovement.GetSpeed();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
-            //Instantiate(pickupEffect, transform.position, transform.rotation);
-            //pickupEffect.Play();
-            ArmorCollect.Play();
-            Player.AddArmor(3);
+            Debug.Log("Player picked up speed");
+            Player.SetAlteredSpeed(speed * 2);
             StartCoroutine("Destroy");
         }
-        
-        
+
+
     }
 
     IEnumerator Destroy()
@@ -33,8 +33,8 @@ public class ArmorSound : MonoBehaviour
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
         yield return new WaitForSeconds(10f);
-        Player.RemoveArmor(3);
+        Player.SetAlteredSpeed(speed);
         gameObject.SetActive(false);
-        
+
     }
 }

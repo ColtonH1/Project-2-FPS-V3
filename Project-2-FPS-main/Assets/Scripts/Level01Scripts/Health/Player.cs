@@ -18,13 +18,15 @@ public class Player : MonoBehaviour
     public int currentHealth;
     public static int armor;
     public static int totalArmor;
+    //public static float alteredSpeed;
+    public static float speed;
 
     public HealthBar healthBar;
 
 
 
     //death
-    public static bool playerIsDead = false;
+    public static bool playerIsDead;
     public GameObject deathMenuUI;
     public GameObject reticle;
 
@@ -36,10 +38,12 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerIsDead = false;
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         _currentHealthTextView.text = "Health: " + currentHealth.ToString();
         Impact = GetComponent<AudioSource>();
+        speed = PlayerMovement.GetSpeed();
     }
 
     // Update is called once per frame
@@ -118,12 +122,14 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
+        //Level01Controller.SetShowed(true);
         Impact.PlayOneShot(DeathSound);
         deathMenuUI.SetActive(true);
         reticle.SetActive(false);
+        Level01Controller.SetCurrentTime(0f);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         playerIsDead = true;
 
     }
@@ -169,6 +175,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+        //float alteredSpeed;
         if(collider.tag == "Armor")
         {
             //armor += 2;
@@ -184,11 +191,16 @@ public class Player : MonoBehaviour
         else if(collider.tag == "Bonus")
         {
             level01Controller.AddToScore(50);
-            Debug.Log("Hit Bonus");
         }
-        else if(collider.tag == "SlowDownProjectilePowerUp")
+        else if (collider.tag == "SpeedUp")
         {
-
+            //alteredSpeed = PlayerMovement.GetSpeed() * 5f;
+            //SetAlteredSpeed(alteredSpeed);
+            Debug.Log("SpeedUp");
+        }
+        else if(collider.tag == "SlowDownPowerUp")
+        {
+            
         }
         else
         {
@@ -197,8 +209,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    public static void SetAlteredSpeed(float alteredSpeed)
+    {
+        speed = alteredSpeed;
+    }
+    public static float GetNewSpeed()
+    {
+        return speed;
+    }
+
+
     public static bool IsPlayerDead()
     {
+        Debug.Log("Player is dead " + playerIsDead);
         return playerIsDead;
     }
 }

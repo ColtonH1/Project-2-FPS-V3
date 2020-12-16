@@ -12,8 +12,10 @@ public class PlayerMovement : MonoBehaviour
     //Transform target;
     //NavMeshAgent agent;
 
-    public float speed = 12f; //speed
-    public float startingSpeed;
+    public static float speed = 12f; //speed
+    public static float startingSpeed;
+    public static float alteredSpeed;
+    public static float currentSpeed;
     public float gravity = -9.81f; //gravity
     public float jumpHeight = 3f; //jumping
     public float crouchSpeed = 6f; //crouching speed
@@ -35,12 +37,16 @@ public class PlayerMovement : MonoBehaviour
         characterController = gameObject.GetComponent<CharacterController>();
         height = characterController.height;
         startingSpeed = speed;
+        alteredSpeed = speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float currentSpeed = speed;
+        //currentSpeed = speed;
+
+        currentSpeed = Player.GetNewSpeed();
+
         Jumping();
        
         currentSpeed = Running(currentSpeed);
@@ -115,14 +121,9 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
     }
-
-    /*public void FollowTarget(Interactable newTarget)
+    
+    public static float GetSpeed()
     {
-        target = newTarget.transform;
+        return startingSpeed;
     }
-
-    public void StopFollowingTarget()
-    {
-        target = null; 
-    }*/
 }
