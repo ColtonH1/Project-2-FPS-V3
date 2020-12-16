@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour
     Transform target;
     NavMeshAgent agent;
 
-    public int currentHealth = 3;
+    public float currentHealth = 3;
     private AudioSource shootAudio;
     public AudioClip impactClip;
     public AudioClip fireClip;
@@ -87,12 +87,13 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
 
-    public void Damage(int damageAmount)
+    public void Damage(float damageAmount)
     {
         score += 5;
         gotShot = true;
         currentHealth -= damageAmount;
         shootAudio.PlayOneShot(impactClip);
+        agent.SetDestination(target.position);
         if (currentHealth <= 0)
         {
             gameObject.SetActive(false);

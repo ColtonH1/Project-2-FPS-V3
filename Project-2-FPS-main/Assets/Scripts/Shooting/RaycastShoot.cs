@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class RaycastShoot : MonoBehaviour
 {
 
-    public int gunDamage = 1;
+    public float gunDamage = 1;
     public float fireRate = .25f;
     public float weaponRange = 100f;
     public float hitForce = 100f;
@@ -22,6 +22,7 @@ public class RaycastShoot : MonoBehaviour
     public AudioClip shootClip;
     private LineRenderer laserLine;
     private float nextFire;
+
 
     void Start()
     {
