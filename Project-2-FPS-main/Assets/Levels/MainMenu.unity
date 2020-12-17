@@ -1393,9 +1393,9 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "A rogue militia has taken all of the gold. It is your job to retrieve
-    at least 4 of the 5 chests full of this gold. No one will blame you if you have
-    to shoot a couple of the soldiers.\nKeep in mind the chests are heavily guarded.
-    \nIf you can, try to get all 5 for bonus points   :)"
+    all 5 of the chests full of this gold. No one will blame you if you have to shoot
+    a couple of the soldiers.\nKeep in mind the chests are heavily guarded. \nGood
+    Luck! :)"
 --- !u!222 &605295664
 CanvasRenderer:
   m_ObjectHideFlags: 0

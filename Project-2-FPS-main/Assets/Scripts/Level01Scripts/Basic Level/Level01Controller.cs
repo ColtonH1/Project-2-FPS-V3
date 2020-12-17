@@ -23,7 +23,7 @@ public class Level01Controller : MonoBehaviour
     public GameObject[] treasureChest;
     public int treasureCount;
     public static float currentTime;
-    public static bool showed = false;
+    public static bool showed;
 
 
     int _currentScore;
@@ -32,6 +32,7 @@ public class Level01Controller : MonoBehaviour
 
     void Start()
     {
+        showed = false;
         treasureChest = GameObject.FindGameObjectsWithTag("Treasure");
         SetHighScore();
         SetCurrentTime(1);

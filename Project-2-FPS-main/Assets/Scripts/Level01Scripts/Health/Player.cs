@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [SerializeField] Text _currentHealthTextView;
+    [SerializeField] Text _currentArmorTextView;
     public Camera cam;
     private AudioSource Impact;
     public AudioClip HurtSound;
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         _currentHealthTextView.text = "Health: " + currentHealth.ToString();
+        _currentArmorTextView.text = "Armor: " + totalArmor.ToString();
         Impact = GetComponent<AudioSource>();
         speed = PlayerMovement.GetSpeed();
     }
@@ -60,6 +62,7 @@ public class Player : MonoBehaviour
         }*/
 
         totalArmor = armor;
+        _currentArmorTextView.text = "Armor: " + totalArmor.ToString();
         if (currentHealth == 0)
         {
             Die();
